@@ -30,43 +30,67 @@ def likeDislike(image,hand_landmarks):
         landmarks=hand_landmarks[0].landmark
         thumbtip_y=landmarks[thumb_tip].y
         thumbB_y=landmarks[thumb_tip-4].y
-    
-
+        
+            
     
     
         
         for lm_index in finger_tips:
-            fintip_x=landmarks[lm_index].x
-            fintipb_x=landmarks[lm_index-2].x
             
+            fintip_x=landmarks[lm_index].x
+            
+            fintipb_x=landmarks[lm_index-2].x
+            x,y=int(landmarks[lm_index].x*w),int(landmarks[lm_index].y*h)
+                
             if lm_index!=4:
-                if fintip_x<fintipb_x:
-                    fingers.append(1)
-                    
-                    
-
                 if fintip_x>fintipb_x:
                     fingers.append(0)
+                    cv2.circle(image,(x,y),15,(255,0,0),cv2.FILLED)
+                    
+                        
+                        
+                
+                if fintip_x<fintipb_x:
+                    
+                    fingers.append(1)
+                    cv2.circle(image,(x,y),15,(0,255,0),cv2.FILLED)
+                    
+                        
+                
+                        
+                
+        
+        
+                    
+                                            
+        
+        
+         
+                    
+                    
+                                               
         finc=fingers.count(1)
         
-
         if finc==4:
             is_closed=1
             print("true")
+                
         else:
-            is_closed=0
-            print("false")
-            print(f'fingers: {finc}')
-            
+             is_closed=0
+             print("false")
+             print(f'fingers: {finc}')
+                
 
 
         if is_closed==1:
             if thumbtip_y>thumbB_y:
-                cv2.putText(image,"Dislike",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2)
-       
                 
+                cv2.putText(image,"Dislike",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2)
+           
+                    
 
             if thumbtip_y<thumbB_y:
+                
                 cv2.putText(image,"Like",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
             
             
